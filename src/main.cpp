@@ -79,54 +79,79 @@ double kursas(Valiuta valiuta) {
 
 int main() {
   cout << "---------------------------------------------------------" << endl;
+  cout << "                    VALIUTOS KEITYKLA                    " << endl;
+  cout << "---------------------------------------------------------" << endl;
   cout << "     " << "GBP(1): " << GBP_Bendras << ", "
        << "USD(2): " << USD_Bendras << ", "
        << "INR(3): " << INR_Bendras << endl;
   cout << "---------------------------------------------------------" << endl
        << endl;
 
-  cout << "! Veiksmui ivygditi ivesti +, -, = ir suma ir valiuta" << endl;
-  cout << "> Norint pirkti ivesti suma ir valiuta (+ 12 1)" << endl;
-  cout << "> Norint parduoti ivesti suma ir valiuta (- 12 1)" << endl;
-  cout << "> Norint palyginti ivesti suma ir valiuta (= 12 1)" << endl << endl;
-  cout << "---------------------------------------------------------" << endl;
+  cout << "! Pasirinkite veiksma" << endl;
+  cout << "> Norint pirkti iveskite +" << endl;
+  cout << "> Norint parduoti iveskite -" << endl;
+  cout << "> Norint palyginti kursa iveskite =" << endl;
+  cout << "> Norint iseiti iveskite 0" << endl << endl;
 
   string pasirinkimas;
-  double suma;
-  int valiutaNr;
-  // getline(cin, text);
-  cin >> pasirinkimas >> suma >> valiutaNr;
+  cin >> pasirinkimas;
 
-  // cout << pasirinkimas << " " << suma << " " << valiutaNr << endl;
-
-  if (valiutaNr > 3 || valiutaNr < 1) {
-    cout << "! Neteisingas valiuta" << endl;
+  if (pasirinkimas == "0") {
+    cout << "> Programa baigta" << endl;
     return 0;
   }
 
-  Valiuta valiuta = static_cast<Valiuta>(valiutaNr);
-
-  if (suma < 0) {
-    cout << "! Neteisinga suma" << endl;
+  if (pasirinkimas != "+" && pasirinkimas != "-" && pasirinkimas != "=") {
+    cout << "! Neteisingas pasirinkimas" << endl;
     return 0;
+  }
+
+  cout << "---------------------------------------------------------" << endl;
+  cout << "! Pasirinkite valiuta" << endl;
+  cout << "> GBP - 1" << endl;
+  cout << "> USD - 2" << endl;
+  cout << "> INR - 3" << endl;
+  cout << "---------------------------------------------------------" << endl;
+
+  int valiutaNr;
+  cin >> valiutaNr;
+  cout << "---------------------------------------------------------" << endl;
+  if (valiutaNr < 1 || valiutaNr > 3) {
+    cout << "! Neteisingas valiutos pasirinkimas" << endl;
+    return 0;
+  }
+
+  Valiuta valiuta = static_cast<Valiuta>(valiutaNr - 1);
+  double suma = 1.0;
+  if (pasirinkimas != "=") {
+    if (pasirinkimas == "+") {
+      cout << "> Iveskite suma EUR" << endl;
+    } else {
+      cout << "> Iveskite suma " << ToString(valiuta) << endl;
+    }
+    cout << "---------------------------------------------------------" << endl;
+
+    cin >> suma;
+    if (suma <= 0) {
+      cout << "! Suma turi buti didesne uz nuli" << endl;
+      cout << "---------------------------------------------------------" << endl;
+      return 0;
+    }
   }
 
   cout << "---------------------------------------------------------" << endl;
   if (pasirinkimas == "+") {
     cout << fixed << setprecision(2) << "> Uz " << suma << " EUR nusipirkta "
-         << pirkti(valiuta, suma) << " " << ToString(valiuta)
-         << endl;
+         << pirkti(valiuta, suma) << " " << ToString(valiuta) << endl;
   } else if (pasirinkimas == "-") {
     cout << fixed << setprecision(2) << "> Parduota " << suma << " "
          << ToString(valiuta) << " uz " << parduoti(valiuta, suma) << " EUR"
          << endl;
-  } else if (pasirinkimas == "=") {
-    cout << fixed << setprecision(2) << "> " << suma << " EUR yra "
-         << suma * kursas(valiuta) << " " << ToString(valiuta) << endl
-         << "> 1 " << ToString(valiuta) << " yra "
-         << 1.0 / kursas(valiuta) << " EUR" << endl;
   } else {
-    cout << "! Neteisingas pasirinkimas" << endl;
+    cout << fixed << setprecision(2) << "> 1 EUR yra " << kursas(valiuta) << " "
+         << ToString(valiuta) << endl
+         << "> 1 " << ToString(valiuta) << " yra " << 1.0 / kursas(valiuta)
+         << " EUR" << endl;
   }
   cout << "---------------------------------------------------------" << endl;
 
