@@ -39,13 +39,13 @@ string ToString(Valiuta valiuta) {
 double pirkti(Valiuta valiuta, double suma) {
   switch (valiuta) {
   case GBP:
-    return suma / GBP_Pirkti;
+    return suma * GBP_Pirkti;
     break;
   case USD:
-    return suma / USD_Pirkti;
+    return suma * USD_Pirkti;
     break;
   case INR:
-    return suma / INR_Pirkti;
+    return suma * INR_Pirkti;
     break;
   }
 }
