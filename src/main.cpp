@@ -2,7 +2,6 @@
 #include <iostream>
 #include <string>
 
-
 using namespace std;
 
 const double GBP_Bendras = 0.8729;
@@ -90,6 +89,7 @@ int main() {
   cout << "> Norint pirkti ivesti suma ir valiuta (+ 12 1)" << endl;
   cout << "> Norint parduoti ivesti suma ir valiuta (- 12 1)" << endl;
   cout << "> Norint palyginti ivesti suma ir valiuta (= 12 1)" << endl << endl;
+  cout << "---------------------------------------------------------" << endl;
 
   string pasirinkimas;
   double suma;
@@ -111,9 +111,10 @@ int main() {
     return 0;
   }
 
+  cout << "---------------------------------------------------------" << endl;
   if (pasirinkimas == "+") {
-    cout << fixed << setprecision(2) << "> Nusipirkta " << suma << " "
-         << ToString(valiuta) << " uz " << pirkti(valiuta, suma) << " EUR"
+    cout << fixed << setprecision(2) << "> Uz " << suma << " EUR nusipirkta "
+         << pirkti(valiuta, suma) << " " << ToString(valiuta)
          << endl;
   } else if (pasirinkimas == "-") {
     cout << fixed << setprecision(2) << "> Parduota " << suma << " "
@@ -125,6 +126,7 @@ int main() {
   } else {
     cout << "! Neteisingas pasirinkimas" << endl;
   }
+  cout << "---------------------------------------------------------" << endl;
 
   return 0;
 }
