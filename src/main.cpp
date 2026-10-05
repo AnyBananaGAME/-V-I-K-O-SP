@@ -63,16 +63,16 @@ double parduoti(Valiuta valiuta, double suma) {
   }
 }
 
-double palyginti(Valiuta valiuta, double suma) {
+double kursas(Valiuta valiuta) {
   switch (valiuta) {
   case GBP:
-    return suma * GBP_Bendras;
+    return GBP_Bendras;
     break;
   case USD:
-    return suma * USD_Bendras;
+    return USD_Bendras;
     break;
   case INR:
-    return suma * INR_Bendras;
+    return INR_Bendras;
     break;
   }
 }
@@ -122,7 +122,9 @@ int main() {
          << endl;
   } else if (pasirinkimas == "=") {
     cout << fixed << setprecision(2) << "> " << suma << " EUR yra "
-         << palyginti(valiuta, suma) << " " << ToString(valiuta) << endl;
+         << suma * kursas(valiuta) << " " << ToString(valiuta) << endl
+         << "> 1 " << ToString(valiuta) << " yra "
+         << 1.0 / kursas(valiuta) << " EUR" << endl;
   } else {
     cout << "! Neteisingas pasirinkimas" << endl;
   }
