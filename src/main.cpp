@@ -115,6 +115,10 @@ int main() {
 
   int valiutaNr;
   cin >> valiutaNr;
+  if (cin.fail()) {
+    cout << "! Iveskite valiutos numeri 1, 2 arba 3" << endl;
+    return 0;
+  }
   cout << "---------------------------------------------------------" << endl;
   if (valiutaNr < 1 || valiutaNr > 3) {
     cout << "! Neteisingas valiutos pasirinkimas" << endl;
@@ -132,6 +136,11 @@ int main() {
     cout << "---------------------------------------------------------" << endl;
 
     cin >> suma;
+    if (cin.fail()) {
+      cout << "! Iveskite skaiciu" << endl;
+      cout << "---------------------------------------------------------" << endl;
+      return 0;
+    }
     if (suma <= 0) {
       cout << "! Suma turi buti didesne uz nuli" << endl;
       cout << "---------------------------------------------------------" << endl;
