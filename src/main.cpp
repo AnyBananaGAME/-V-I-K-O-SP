@@ -1,5 +1,7 @@
+#include <iomanip>
 #include <iostream>
 #include <string>
+
 
 using namespace std;
 
@@ -20,6 +22,19 @@ enum Valiuta {
   USD,
   INR,
 };
+
+string ToString(Valiuta valiuta) {
+  switch (valiuta) {
+  case GBP:
+    return "GBP";
+  case USD:
+    return "USD";
+  case INR:
+    return "INR";
+  default:
+    return "Unknown";
+  }
+}
 
 double pirkti(Valiuta valiuta, double suma) {
   switch (valiuta) {
@@ -49,35 +64,66 @@ double parduoti(Valiuta valiuta, double suma) {
   }
 }
 
-int main() {
-  cout << "------------------------------------------------" << endl;
-  cout << "     " << "GBP: " << GBP_Bendras << ", "
-       << "USD: " << USD_Bendras << ", "
-       << "INR: " << INR_Bendras << endl;
-  cout << "------------------------------------------------" << endl << endl;
+double palyginti(Valiuta valiuta, double suma) {
+  switch (valiuta) {
+  case GBP:
+    return suma * GBP_Bendras;
+    break;
+  case USD:
+    return suma * USD_Bendras;
+    break;
+  case INR:
+    return suma * INR_Bendras;
+    break;
+  }
+}
 
-  cout << "> Norint pirkti ivesti suma ir valiuta (+ 12 GBP)" << endl;
-  cout << "> Norint parduoti ivesti suma ir valiuta (- 12 GBP)" << endl << endl;
-  cout << "> Norint palyginti ivesti suma ir valiuta (= 12 GBP)" << endl << endl;
+int main() {
+  cout << "---------------------------------------------------------" << endl;
+  cout << "     " << "GBP(1): " << GBP_Bendras << ", "
+       << "USD(2): " << USD_Bendras << ", "
+       << "INR(3): " << INR_Bendras << endl;
+  cout << "---------------------------------------------------------" << endl
+       << endl;
+
+  cout << "! Veiksmui ivygditi ivesti +, -, = ir suma ir valiuta" << endl;
+  cout << "> Norint pirkti ivesti suma ir valiuta (+ 12 1)" << endl;
+  cout << "> Norint parduoti ivesti suma ir valiuta (- 12 1)" << endl;
+  cout << "> Norint palyginti ivesti suma ir valiuta (= 12 1)" << endl << endl;
 
   string pasirinkimas;
   double suma;
-  string valiutaText;
+  int valiutaNr;
   // getline(cin, text);
-  cin >> pasirinkimas >> suma >> valiutaText;
+  cin >> pasirinkimas >> suma >> valiutaNr;
 
-  cout << pasirinkimas << " " << suma << " " << valiutaText << endl;
+  // cout << pasirinkimas << " " << suma << " " << valiutaNr << endl;
 
-  Valiuta valiuta = GBP;
-  if (valiutaText == "USD")
-    valiuta = USD;
-  if (valiutaText == "INR")
-    valiuta = INR;
+  if (valiutaNr > 3 || valiutaNr < 1) {
+    cout << "! Neteisingas valiuta" << endl;
+    return 0;
+  }
+
+  Valiuta valiuta = static_cast<Valiuta>(valiutaNr);
+
+  if (suma < 0) {
+    cout << "! Neteisinga suma" << endl;
+    return 0;
+  }
 
   if (pasirinkimas == "+") {
-    cout << "Nusipirkta " << suma << " " << valiutaText << " uz " << pirkti(valiuta, suma) << " EUR" << endl;
+    cout << fixed << setprecision(2) << "> Nusipirkta " << suma << " "
+         << ToString(valiuta) << " uz " << pirkti(valiuta, suma) << " EUR"
+         << endl;
+  } else if (pasirinkimas == "-") {
+    cout << fixed << setprecision(2) << "> Parduota " << suma << " "
+         << ToString(valiuta) << " uz " << parduoti(valiuta, suma) << " EUR"
+         << endl;
+  } else if (pasirinkimas == "=") {
+    cout << fixed << setprecision(2) << "> " << suma << " EUR yra "
+         << palyginti(valiuta, suma) << " " << ToString(valiuta) << endl;
   } else {
-    cout << "Parduota " << suma << " " << valiutaText << " uz " << parduoti(valiuta, suma) << " EUR" << endl;
+    cout << "! Neteisingas pasirinkimas" << endl;
   }
 
   return 0;
