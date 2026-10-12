@@ -78,93 +78,100 @@ double kursas(Valiuta valiuta) {
 }
 
 int main() {
-  cout << "---------------------------------------------------------" << endl;
-  cout << "                    VALIUTOS KEITYKLA                    " << endl;
-  cout << "---------------------------------------------------------" << endl;
-  cout << "     " << "GBP(1): " << GBP_Bendras << ", "
-       << "USD(2): " << USD_Bendras << ", "
-       << "INR(3): " << INR_Bendras << endl;
-  cout << "---------------------------------------------------------" << endl
-       << endl;
+  bool iseiti = false;
+  while (!iseiti) {
 
-  cout << "! Pasirinkite veiksma" << endl;
-  cout << "> Norint pirkti iveskite +" << endl;
-  cout << "> Norint parduoti iveskite -" << endl;
-  cout << "> Norint palyginti kursa iveskite =" << endl;
-  cout << "> Norint iseiti iveskite 0" << endl << endl;
+    cout << "---------------------------------------------------------" << endl;
+    cout << "                    VALIUTOS KEITYKLA                    " << endl;
+    cout << "---------------------------------------------------------" << endl;
+    cout << "     " << "GBP(1): " << GBP_Bendras << ", "
+         << "USD(2): " << USD_Bendras << ", "
+         << "INR(3): " << INR_Bendras << endl;
+    cout << "---------------------------------------------------------" << endl
+         << endl;
 
-  string pasirinkimas;
-  cin >> pasirinkimas;
+    cout << "! Pasirinkite veiksma" << endl;
+    cout << "> Norint pirkti iveskite +" << endl;
+    cout << "> Norint parduoti iveskite -" << endl;
+    cout << "> Norint palyginti kursa iveskite =" << endl;
+    cout << "> Norint iseiti iveskite 0" << endl << endl;
 
-  if (pasirinkimas == "0") {
-    cout << "> Programa baigta" << endl;
-    return 0;
-  }
+    string pasirinkimas;
+    cin >> pasirinkimas;
 
-  if (pasirinkimas != "+" && pasirinkimas != "-" && pasirinkimas != "=") {
-    cout << "! Neteisingas pasirinkimas" << endl;
-    return 0;
-  }
-
-  cout << "---------------------------------------------------------" << endl;
-  cout << "! Pasirinkite valiuta" << endl;
-  cout << "> GBP - 1" << endl;
-  cout << "> USD - 2" << endl;
-  cout << "> INR - 3" << endl;
-  cout << "---------------------------------------------------------" << endl;
-
-  int valiutaNr;
-  cin >> valiutaNr;
-  if (cin.fail()) {
-    cout << "! Iveskite valiutos numeri 1, 2 arba 3" << endl;
-    return 0;
-  }
-  cout << "---------------------------------------------------------" << endl;
-  if (valiutaNr < 1 || valiutaNr > 3) {
-    cout << "! Neteisingas valiutos pasirinkimas" << endl;
-    return 0;
-  }
-
-  Valiuta valiuta = static_cast<Valiuta>(valiutaNr - 1);
-  double suma = 1.0;
-  if (pasirinkimas != "=") {
-    if (pasirinkimas == "+") {
-      cout << "> Iveskite suma EUR" << endl;
-    } else {
-      cout << "> Iveskite suma " << ToString(valiuta) << endl;
+    if (pasirinkimas == "0") {
+      cout << "> Programa baigta" << endl;
+      break;
     }
+
+    if (pasirinkimas != "+" && pasirinkimas != "-" && pasirinkimas != "=") {
+      cout << "! Neteisingas pasirinkimas" << endl;
+      continue;
+    }
+
+    cout << "---------------------------------------------------------" << endl;
+    cout << "! Pasirinkite valiuta" << endl;
+    cout << "> GBP - 1" << endl;
+    cout << "> USD - 2" << endl;
+    cout << "> INR - 3" << endl;
     cout << "---------------------------------------------------------" << endl;
 
-    cin >> suma;
-    if (cin.fail()) {
-      cout << "! Iveskite skaiciu" << endl;
-      cout << "---------------------------------------------------------"
-           << endl;
-      return 0;
-    }
-    if (suma <= 0) {
-      cout << "! Suma turi buti didesne uz nuli" << endl;
-      cout << "---------------------------------------------------------"
-           << endl;
-      return 0;
-    }
-  }
+    int valiutaNr;
+    cin >> valiutaNr;
 
-  cout << "---------------------------------------------------------" << endl;
-  if (pasirinkimas == "+") {
-    cout << fixed << setprecision(2) << "> Uz " << suma << " EUR nusipirkta "
-         << pirkti(valiuta, suma) << " " << ToString(valiuta) << endl;
-  } else if (pasirinkimas == "-") {
-    cout << fixed << setprecision(2) << "> Parduota " << suma << " "
-         << ToString(valiuta) << " uz " << parduoti(valiuta, suma) << " EUR"
-         << endl;
-  } else {
-    cout << fixed << setprecision(2) << "> 1 EUR yra " << kursas(valiuta) << " "
-         << ToString(valiuta) << endl
-         << "> 1 " << ToString(valiuta) << " yra " << 1.0 / kursas(valiuta)
-         << " EUR" << endl;
+    if (cin.fail()) {
+      cout << "! Iveskite valiutos numeri 1, 2 arba 3" << endl;
+      continue;
+    }
+
+    cout << "---------------------------------------------------------" << endl;
+    if (valiutaNr < 1 || valiutaNr > 3) {
+      cout << "! Neteisingas valiutos pasirinkimas" << endl;
+      continue;
+    }
+
+    Valiuta valiuta = static_cast<Valiuta>(valiutaNr - 1);
+    double suma = 1.0;
+    if (pasirinkimas != "=") {
+      if (pasirinkimas == "+") {
+        cout << "> Iveskite suma EUR" << endl;
+      } else {
+        cout << "> Iveskite suma " << ToString(valiuta) << endl;
+      }
+      cout << "---------------------------------------------------------"
+           << endl;
+
+      cin >> suma;
+      if (cin.fail()) {
+        cout << "! Iveskite skaiciu" << endl;
+        cout << "---------------------------------------------------------"
+             << endl;
+        continue;
+      }
+      if (suma <= 0) {
+        cout << "! Suma turi buti didesne uz nuli" << endl;
+        cout << "---------------------------------------------------------"
+             << endl;
+        continue;
+      }
+    }
+
+    cout << "---------------------------------------------------------" << endl;
+    if (pasirinkimas == "+") {
+      cout << fixed << setprecision(2) << "> Uz " << suma << " EUR nusipirkta "
+           << pirkti(valiuta, suma) << " " << ToString(valiuta) << endl;
+    } else if (pasirinkimas == "-") {
+      cout << fixed << setprecision(2) << "> Parduota " << suma << " "
+           << ToString(valiuta) << " uz " << parduoti(valiuta, suma) << " EUR"
+           << endl;
+    } else {
+      cout << fixed << setprecision(2) << "> 1 EUR yra " << kursas(valiuta)
+           << " " << ToString(valiuta) << endl
+           << "> 1 " << ToString(valiuta) << " yra " << 1.0 / kursas(valiuta)
+           << " EUR" << endl;
+    }
+    cout << "---------------------------------------------------------" << endl;
   }
-  cout << "---------------------------------------------------------" << endl;
 
   return 0;
 }
